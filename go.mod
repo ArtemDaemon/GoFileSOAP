@@ -1,3 +1,3 @@
-module go-soap-file-service
+module go-file-soap
 
 go 1.23.4
