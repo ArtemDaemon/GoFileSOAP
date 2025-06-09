@@ -1,7 +1,16 @@
 package storage
 
-import "os"
+import (
+	"os"
+	"path/filepath"
+)
+
+const uploadDir = "uploads"
 
 func SaveFile(filename string, data []byte) error {
-	return os.WriteFile(filename, data, 0644)
+	if err := os.MkdirAll(uploadDir, 0755); err != nil {
+		return err
+	}
+	fullPath := filepath.Join(uploadDir, filename)
+	return os.WriteFile(fullPath, data, 0644)
 }
