@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="JsonFileService"
+             targetNamespace="http://example.com/json"
+             xmlns:tns="http://example.com/json"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+    <message name="UploadJSONRequest">
+        <part name="Filename" type="xsd:string"/>
+        <part name="Content" type="xsd:string"/>
+    </message>
+
+    <message name="UploadJSONResponse">
+        <part name="Status" type="xsd:string"/>
+        <part name="Message" type="xsd:string"/>
+    </message>
+
+    <portType name="JsonFilePortType">
+        <operation name="UploadJSON">
+            <input message="tns:UploadJSONRequest"/>
+            <output message="tns:UploadJSONResponse"/>
+        </operation>
+    </portType>
+
+    <binding name="JsonFileBinding" type="tns:JsonFilePortType">
+        <soap:binding style="rpc"
+                    transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="UploadJSON">
+            <soap:operation soapAction="http://example.com/json/UploadJSON"/>
+            <input>
+                <soap:body use="encoded"
+                    namespace="http://example.com/json"
+                    encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </input>
+            <output>
+                <soap:body use="encoded"
+                    namespace="http://example.com/json"
+                    encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output>
+        </operation>
+    </binding>
+
+    <service name="JsonFileService">
+        <port name="JsonFilePort" binding="tns:JsonFileBinding">
+            <soap:address location="http://localhost:8080/soap"/>
+        </port>
+    </service>
+</definitions>
