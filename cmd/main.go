@@ -28,9 +28,8 @@ func main() {
 	r.Route("/api", func(r chi.Router) {
 		r.Use(middleware.AuthMiddleware(expectedToken))
 		r.Post("/soap", api.UploadJsonHandler)
+		r.Get("/soap.wsdl", api.WSDLHandler)
 	})
-
-	r.Get("/soap.wsdl", api.WSDLHandler)
 
 	fmt.Println("SOAP service listening on http://localhost:8080/api/soap")
 	log.Fatal(http.ListenAndServe(":8080", r))
