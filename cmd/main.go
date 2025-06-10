@@ -27,7 +27,7 @@ func main() {
 
 	r.Route("/api", func(r chi.Router) {
 		r.Use(middleware.AuthMiddleware(expectedToken))
-		r.Post("/soap", api.UploadJsonHandler)
+		r.Post("/soap", api.UploadMTOMHandler)
 		r.Get("/soap.wsdl", api.WSDLHandler)
 	})
 
