@@ -1,6 +1,7 @@
 package api
 
 import (
+	"encoding/json"
 	"go-file-soap/internal/soap"
 	"go-file-soap/internal/storage"
 	"io"
@@ -73,6 +74,11 @@ func UploadMTOMHandler(w http.ResponseWriter, r *http.Request) {
 
 	if filename == "" {
 		soap.WriteSOAPResponse(w, "error", "Filename is required")
+		return
+	}
+
+	if !json.Valid(fileData) {
+		soap.WriteSOAPResponse(w, "error", "File data is not valid JSON")
 		return
 	}
 
